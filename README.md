@@ -1,3 +1,10 @@
+# 🏊‍♀️ piscine-Django 🏊‍♀️
+piscine-Django est un projet de 2 semaines qui comme la piscine de sélection de 42 est divisé en plusieurs modules. Chaque module aborde une notion nouvelle sur le language/techno de la piscine.  
+Cette piscine est sur le framework web Django.  
+
+## 📋 Modules
+
+
 | Module |             Title              |                         Description                          |
 | :----: | :----------------------------: | :----------------------------------------------------------: |
 |   00   | Initiation                     | Développement web: HTTP, HTML, CSS, script Javascript        |
