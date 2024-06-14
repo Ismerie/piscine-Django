@@ -1,0 +1,19 @@
+{% extends 'ex04/base.html' %}
+{% load static %}
+
+{% block title %} Remove {% endblock %}
+
+{% block style %}
+<style>
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Remove</h1>
+<form method="post" action="{{request.path}}">
+  {% csrf_token %}
+  {{ form.as_table }}
+  <input type="submit" value="Remove" />
+</form>
+{% endblock %}

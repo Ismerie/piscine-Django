@@ -1,0 +1,31 @@
+{% extends 'ex10/base.html' %}
+{% load static %}
+
+{% block title %} Results {% endblock %}
+
+{% block style %}
+<style>
+    table {
+      border-collapse: collapse;
+    }
+    td,th {
+      border: 2px solid green;
+      padding: 5px
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+   <h1>Filter Results</h1>
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    {{ result.title }} - {{ result.name}} - {{ result.gender }} - {{ result.homeworld }} - {{ result.diameter }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nothing corresponding to your research</p>
+    {% endif %}
+{% endblock %}

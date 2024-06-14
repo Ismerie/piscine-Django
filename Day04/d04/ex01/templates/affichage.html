@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Ex01 : Processus d’affichage d’une page statique.{% endblock %}
+
+{% block content %}
+<h1>Ex01 : Processus d’affichage d’une page statique.</h1>
+<p>Cette page décrit le processus entraînant l’affichage d’une page web statique à partir d’un simple template en passant par une vue, de la requête à la réponse.</p>
+
+<h2>Processus d'Affichage d'une Page Statique</h2>
+<p>Le processus d'affichage d'une page statique dans Django implique plusieurs étapes clés :</p>
+
+<ol>
+    <li><strong>Définir le template HTML :</strong> Le template est un fichier HTML qui sert de base pour la page. Il peut contenir des balises Django pour afficher dynamiquement des données.</li>
+    <li><strong>Créer une vue :</strong> La vue est une fonction Python qui prend une requête web et renvoie une réponse web. Pour une page statique, la vue rend simplement le template HTML.</li>
+    <li><strong>Configurer les URLs :</strong> Les URLs définissent comment les requêtes HTTP sont mappées aux vues. Pour chaque URL, une vue correspondante est définie.</li>
+    <li><strong>Faire une requête :</strong> L'utilisateur fait une requête HTTP en accédant à une URL spécifique.</li>
+    <li><strong>Traitement de la requête par Django :</strong> Django analyse l'URL de la requête, appelle la vue correspondante, rend le template HTML et renvoie la réponse HTTP au navigateur de l'utilisateur.</li>
+</ol>
+
+<h3>Exemple Concret</h3>
+<p>Voici un exemple concret pour illustrer ce processus :</p>
+
+<h4>1. Template HTML</h4>
+<pre><code>
+{% verbatim %}
+&lt;!-- templates/static_page.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Page Statique&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Bienvenue sur la page statique&lt;/h1&gt;
+    &lt;p&gt;Ceci est une page statique rendue par Django.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+{% endverbatim %}
+</code></pre>
+
+<h4>2. Vue</h4>
+<pre><code>
+{% verbatim %}
+# views.py
+from django.shortcuts import render
+
+def static_page(request):
+    return render(request, 'static_page.html')
+{% endverbatim %}
+</code></pre>
+
+<h4>3. URL</h4>
+<pre><code>
+{% verbatim %}
+# urls.py
+from django.urls import path
+from .views import static_page
+
+urlpatterns = [
+    path('static/', static_page, name='static_page'),
+]
+{% endverbatim %}
+</code></pre>
+
+<h4>4. Requête et Réponse</h4>
+<p>Lorsque l'utilisateur accède à l'URL <code>/static/</code>, Django traite la requête, appelle la vue <code>static_page</code>, rend le template <code>static_page.html</code> et renvoie la réponse HTML au navigateur.</p>
+{% endblock %}

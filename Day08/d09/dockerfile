@@ -1,0 +1,15 @@
+FROM python:3.11.6
+
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /d09
+
+RUN apt-get update \
+	&& rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip
+RUN pip install python-decouple psycopg2-binary\
+    Django channels[daphne]
+
+COPY . /d09/
+
+CMD ["daphne", "-p", "8000", "d09.asgi:application"]

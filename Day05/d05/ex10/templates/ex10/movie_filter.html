@@ -1,0 +1,25 @@
+{% extends 'ex10/base.html' %}
+{% load static %}
+
+{% block title %} Movie Filter {% endblock %}
+
+{% block style %}
+<style>
+    table {
+      border-collapse: collapse;
+    }
+    td,th {
+      border: 2px solid green;
+      padding: 5px
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+   <h1>Movie Filter</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+
+{% block content %}
+<ol>
+{% for favourite_article in object_list %}
+      <li><a href="{% url 'article-detail' pk=favourite_article.article.pk %}">{{ favourite_article.article.title }}</a></li>
+    {% endfor %}
+</ol>
+{% endblock %}

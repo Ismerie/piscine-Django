@@ -1,0 +1,5 @@
+title = "CV de lloric"
+firstname = "lloric"
+name = "duoquadragintian"
+age = "23"
+profession = "developer"

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ex01 : Moteur de template.{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style2.css' %}">
+{% endblock style %}
+
+{% block content %}
+<h1>Ex01 : Moteur de template.</h1>
+<p>Cette page décrit le fonctionnement du moteur de templates par défaut de Django ainsi que :</p>
+<ul>
+    <li>Le fonctionnement des blocs.</li>
+    <li>Les boucles <code>for ... in</code>.</li>
+    <li>Les structures de contrôle <code>if</code>.</li>
+    <li>L'affichage de variables passées par contexte.</li>
+</ul>
+
+<h2>Fonctionnement du Moteur de Templates de Django</h2>
+<p>Le moteur de templates de Django permet de générer du HTML en utilisant des fichiers de template et des données passées par le contexte.</p>
+
+<h3>Les Blocs</h3>
+<p>Les blocs sont définis dans les templates de base et peuvent être remplacés dans les templates enfants. Ils sont utilisés pour structurer le contenu réutilisable.</p>
+<pre><code>
+{% verbatim %}
+<!-- base.html -->
+ &lt;!DOCTYPE html&gt;
+ &lt;html&gt;
+ &lt;head&gt;
+     &lt;title&gt;{% block title %}Titre par défaut{% endblock %} &lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+    {% block content %}
+    Contenu par défaut.
+    {% endblock %}
+ &lt;/body&gt;
+ &lt;/html&gt;
+
+ &lt;!-- child.html --&gt;
+{% extends "base.html" %}
+{% block title %}Titre de la page enfant{% endblock %}
+{% block content %}
+Contenu spécifique à la page enfant.
+{% endblock %}
+{% endverbatim %}
+</code></pre>
+
+<h3>Les Boucles <code>for ... in</code></h3>
+<p>Les boucles <code>for</code> permettent d'itérer sur des listes de données passées au template.</p>
+<pre><code>
+{% verbatim %}
+{% for item in items %}
+&lt;p&gt;{{ item }}&lt;/p&gt;
+{% endfor %}
+{% endverbatim %}
+</code></pre>
+
+<h3>Les Structures de Contrôle <code>if</code></h3>
+<p>Les structures de contrôle <code>if</code> permettent d'afficher du contenu conditionnellement.</p>
+<pre><code>
+{% verbatim %}
+{% if user.is_authenticated %}
+    &lt;p&gt;Bonjour, {{ user.username }}!&lt;/p&gt;
+{% else %}
+    &lt;p&gt;Bonjour, visiteur!&lt;/p&gt;
+{% endif %}
+{% endverbatim %}
+</code></pre>
+
+<h3>Affichage de Variables Passées par Contexte</h3>
+<p>Les variables passées par le contexte à un template peuvent être affichées directement en utilisant des double accolades.</p>
+<pre><code>
+{% verbatim %}
+&lt;!-- views.py --&gt;
+def my_view(request):
+    context = {'name': 'Django'}
+    return render(request, 'my_template.html', context)
+
+&lt;!-- my_template.html --&gt;
+&lt;p&gt;Bonjour, {{ name }}!&lt;/p&gt;
+{% endverbatim %}
+</code></pre>
+{% endblock %}

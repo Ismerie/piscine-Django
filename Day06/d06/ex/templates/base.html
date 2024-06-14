@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Life Pro Tips{% endblock %}</title>
+    {% block style %}{% endblock style %}
+</head>
+<body>
+    {% if not login %}
+        {% include 'home.html' %}
+    {% endif %}
+    {% if login %}
+    <nav>
+        <div>
+            <h2>Hello {{ username }}</h2>
+            <ul>
+                <li><a href="../logout/">Déconnexion</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+    {% block content %} {% endblock %}
+</body>
+</html>

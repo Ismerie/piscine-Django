@@ -1,0 +1,38 @@
+{% extends 'ex09/base.html' %}
+{% load static %}
+
+{% block title %} Display {% endblock %}
+
+{% block style %}
+<style>
+    table {
+      border-collapse: collapse;
+    }
+    td,th {
+      border: 2px solid green;
+      padding: 5px
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+  {% if no_data %}
+  <p>No data available, please use the following command line before use:</p>
+  <pre>{{ command_line }}</pre>
+  {% else %}
+  <table>
+	  <tr>
+	  	<th>name</th>
+	  	<th>homeworld</th>
+	  	<th>climate</th>
+	  </tr>
+    {% for person in people %}
+    <tr>
+        <td>{{ person.name }}</td>
+        <td>{{ person.homeworld.name }}</td>
+        <td>{{ person.homeworld.climate }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+{% endblock %}

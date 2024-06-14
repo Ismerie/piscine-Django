@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if login %}
+<form method="post" class="form">
+    {% csrf_token %}
+    {{ form_tip.as_table}}
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+</form>
+{% endif %}
+<div>
+    {% for x in tips %}
+    <p>{{ x.content }}</p>
+    <p>Created by: {{ x.auteur }}</p>
+    <p>{{ x.date }}</p>
+        <a href="delete/?id={{ x.id }}"  role="button">
+            Delete
+        </a>
+        <a href="like/?id={{ x.id }}"  role="button">
+            Like {{ x.upvote }}
+        </a>
+        <a href="dislike/?id={{ x.id }}" role="button">
+             Dislike {{ x.downvote }}
+        </a>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock %}

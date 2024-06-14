@@ -1,0 +1,132 @@
+{% load static %}
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat</title>
+    {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> {% endcomment %}
+        <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    {% block style %}
+        <style>
+        body {
+            background: linear-gradient(to right, #e6e3e2, #857e77);
+        }
+        .inputLg {
+            border-radius: 10px;
+            height: 40px;
+            width: 600px;
+        }
+        .inputBtn {
+            height: 30px;
+            width: 60px;
+            margin-top: 10px;
+            border-radius: 10px
+        }
+        </style>
+        {% endblock %}
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="main-container text-center px-4">
+        <h1 class="text-center">Chat Room</h1>
+        <h2 class="text-center">{{ room_name }}</h2>
+        <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+        <input id="chat-message-input" type="text" class="inputLg" size="100"><br>
+        <input id="chat-message-submit" type="button" class="inputBtn" value="Send">
+        <br/>
+    </div>
+        <h3>Users in room:</h3>
+        <ul id="user-list"></ul>
+        {{ room_name|json_script:"room-name" }}
+        {{ username|json_script:"user-name" }}
+    {% bootstrap_css %} {% bootstrap_javascript %}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const userName = JSON.parse(document.getElementById('user-name').textContent);
+       
+        function scrollToBottom() {
+            const chatLog = document.getElementById('chat-log');
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onopen = function(e) {
+            document.querySelector('#chat-log').value = '';
+        };
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.type === 'user_update') {
+                const connectedUsers = data.users;
+                console.log("list")
+                console.log(connectedUsers)
+                const userListContainer = document.getElementById('user-list');
+                userListContainer.innerHTML = '';
+                connectedUsers.forEach(user => {
+                    //check if user is himself
+                    console.log("onjoin#user added in list = ", user.username)
+                    const userItem = document.createElement('li');
+                    userItem.textContent = user.username;
+                    userListContainer.appendChild(userItem);
+                });
+             }
+             else {
+                if (data.message.endsWith(' has joined the chat')) {
+                    username = data.message.split(' ')[0];
+                    var listItems = Array.from(document.querySelectorAll('#user-list li')).map(li => li.textContent);
+                    console.log(listItems)
+                    if (!listItems.includes(username)) {
+                        const userListContainer = document.getElementById('user-list');
+                        const userItem = document.createElement('li');
+                        userItem.textContent = username;
+                        userListContainer.appendChild(userItem);
+                    }
+                }
+                else if (data.message.endsWith(' has left the chat')) {
+                    username = data.message.split(' ')[0];
+                    var listItems = Array.from(document.querySelectorAll('#user-list li')).map(li => li.textContent);
+                    console.log(listItems)
+                    if (listItems.includes(username)) {
+                        const userListContainer = document.getElementById('user-list');
+                        const userItem = Array.from(userListContainer.children).find(li => li.textContent === username);
+                        userListContainer.removeChild(userItem);
+                    }
+                }
+                document.querySelector('#chat-log').value += (data.message + '\n');
+                scrollToBottom()
+             }
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': userName + ': ' + message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+default_app_config = 'ex09.apps.Ex09Config'

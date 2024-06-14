@@ -1,0 +1,57 @@
+[
+    {
+        "model": "ex00.Article",
+        "pk": 1,
+        "fields": {
+            "title": "The Rise of Django",
+            "author": 1,
+            "created": "2024-01-01",
+            "content": "Django has become one of the most popular web frameworks.",
+            "synopsis": "Most popular web framework"
+        }
+    },
+    {
+        "model": "ex00.Article",
+        "pk": 2,
+        "fields": {
+            "title": "Python for Web Development",
+            "author": 2,
+            "created": "2024-02-01",
+            "content": "Python is a powerful language for web development.",
+            "synopsis": "Powerful language"
+        }
+    },
+    {
+        "model": "ex00.Article",
+        "pk": 3,
+        "fields": {
+            "title": "Understanding REST APIs",
+            "author": 3,
+            "created": "2024-03-01",
+            "content": "REST APIs are essential for modern web applications.",
+            "synopsis": "REST APIs for modern app"
+        }
+    },
+    {
+        "model": "ex00.Article",
+        "pk": 4,
+        "fields": {
+            "title": "Introduction to Machine Learning",
+            "author": 1,
+            "created": "2024-04-01",
+            "content": "Machine learning is transforming the tech industry.",
+            "synopsis": "Transform tech industry"
+        }
+    },
+    {
+        "model": "ex00.Article",
+        "pk": 5,
+        "fields": {
+            "title": "Advanced Django Techniques",
+            "author": 2,
+            "created": "2024-05-01",
+            "content": "Take your Django skills to the next level with these techniques.",
+            "synopsis": "All advanced Django techniques"
+        }
+    }
+]

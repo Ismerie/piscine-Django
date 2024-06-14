@@ -1,0 +1,33 @@
+{% extends 'ex08/base.html' %}
+{% load static %}
+
+{% block title %} Display {% endblock %}
+
+{% block style %}
+<style>
+    table {
+      border-collapse: collapse;
+    }
+    td,th {
+      border: 2px solid purple;
+      padding: 5px
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<table>
+	<tr>
+		<th>name</th>
+		<th>homeworld</th>
+		<th>climate</th>
+	</tr>
+  	{% for data in datas %}
+        <tr>
+        	<td>{{ data.0 }}</td>
+        	<td>{{ data.1 }}</td>
+        	<td>{{ data.2 }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div id="signIn">
+    {% if user.is_authenticated %}
+        <div id="checkIsLog">{{ user.username }}</div>
+    {% endif %}
+        <div id="logout-div" class="custom-container bg-light mt-4">
+            <h2 id="log-as" >Logged as {{ user.username }}</h2>
+            {% csrf_token %}
+            <button class="logout-button" type="submit">log out</button>
+            <pre id="logout-error-msg"></pre>
+        </div>
+
+        <div id="login-div" class="custom-container bg-light mt-4">
+            <h2 class="text-center">Login</h2>
+            <form method="post" id="login-form">
+            {{ form.as_p }}
+            </form>
+            <button class="login-button btn btn-primary text-center" >log in</button>
+            <pre id="login-error-msg"></pre>
+        </div>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Registration</h2>
+<form method="post" action="{{request.path}}">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="Register" />
+</form>
+{% if messages %}
+    {% for message in messages %}
+        <h4>{{ message }}</h4>
+    {% endfor %}
+{% endif %}
+{% endblock %}

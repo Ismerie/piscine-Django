@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap3 %}
+
+{% block title %}<h2 style="display: inline-block">Articles</h2>
+<h3
+  style="display: inline-block; margin-left: 10px; color: rgb(125, 125, 125)"
+>
+  Share your writings
+</h3> {% endblock title %}
+
+{% block nav %}  {% include 'nav.html' %} {% endblock %}
+
+{% block content %}
+
+<div class="table-responsive">
+    <table class="table table-borderless">
+        <tr class="borner-none">
+            <th>Title</th>
+            <th>Synopsis</th>
+            <th>Writes</th>
+            <th>Created date</th>
+            <th>When</th>
+        </tr>
+        {% for object in latest_articles %}
+            <tr class="table-borderless">
+                <td>{{ object.title }}</td>
+                <td>{{ object.synopsis|truncatechars:20  }}</td>
+                <td>{{ object.author }}</td>
+                <td>{{ object.created }}</td>
+                <td>{{ object.created|timesince }}</td>
+                <td>
+                  <a
+                    href="{% url 'article-detail' pk=object.id %}"
+                    class="btn btn-info"
+                    >Read</a
+                  >
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
